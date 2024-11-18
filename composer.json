@@ -1,0 +1,13 @@
+{
+  "name": "generation_carte/ap",
+  "authors": [
+    {
+      "name": "app",
+      "email": "app@gmail.com"
+    }
+  ],
+  "require": {
+    "endroid/qr-code": "^5.0",
+    "bacon/bacon-qr-code": "^3.0"
+  }
+}

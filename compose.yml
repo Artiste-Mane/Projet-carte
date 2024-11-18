@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  database:
+    image: mysql:8-oracle
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: cartes
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./cartes.sql:/docker-entrypoint-initdb.d/cartes.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 3s
+      retries: 10
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: database
+      MYSQL_ROOT_PASSWORD: password
+      UPLOAD_LIMIT: 512M
+      MEMORY_LIMIT: 512M
+    depends_on:
+      database:
+        condition: service_healthy
+volumes:
+  mysql-data:
